@@ -1,6 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const formRoutes = require('./routes/formRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
@@ -9,11 +9,12 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+
 app.use(cors({
   origin: 'http://localhost:3000',
 }));
 
-app.use('/api/forms', formRoutes);
+app.use('/api/contacts', contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 

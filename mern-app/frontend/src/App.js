@@ -1,47 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Form from './components/Form';
-import FormList from './components/FormList';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Box, AppBar, Toolbar, Button, Typography } from '@mui/material';
+import FormPage from './components/FormPage';
+import ViewRecordsPage from './components/ViewRecordsPage';
 
 function App() {
-  const [forms, setForms] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/forms')
-      .then(response => {
-        setForms(response.data);
-      })
-      .catch(error => {
-        console.error("There was an error fetching the forms!", error);
-      });
-  }, []);
-
-  const handleFormSubmit = async (formData) => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/forms', formData);
-      setForms([...forms, response.data]);
-    } catch (error) {
-      console.error("There was an error submitting the form!", error);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/forms/${id}`);
-      setForms(forms.filter(form => form._id !== id));
-    } catch (error) {
-      console.error("There was an error deleting the form!", error);
-    }
-  };
-
   return (
-    <div className="App">
-      <h1>Form Submissions</h1>
-      <Form onSubmit={handleFormSubmit} />
-      <h2>Contact List</h2>
-      <FormList forms={forms} onDelete={handleDelete} />
-    </div>
+    <Router>
+      <Box>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" style={{ flexGrow: 1 }}>
+              Contact Management Dashboard
+            </Typography>
+            <Button color="inherit" href="/add-new-contact">Add New Contact</Button>
+            <Button color="inherit" href="/view-contacts">View Contacts</Button>
+          </Toolbar>
+        </AppBar>
+        <Box style={{ padding: '20px' }}>
+          <Switch>
+            <Route path="/add-new-contact" component={FormPage} />
+            <Route path="/view-contacts" component={ViewRecordsPage} />
+            <Route exact path="/" component={FormPage} />
+          </Switch>
+        </Box>
+      </Box>
+    </Router>
   );
 }
 

@@ -1,38 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { TextField, Button, Container } from '@material-ui/core';
 
-const Form = ({ onSubmit, initialData }) => {
-  const [formData, setFormData] = useState(initialData || {
-    name: '',
-    email: '',
-    phone: '',
-    group: ''
-  });
+const Form = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', group: '' });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await onSubmit(formData);
+      const response = await axios.post(process.env.REACT_APP_BACKEND_URL, formData);
+      console.log('Form submitted successfully:', response.data);
     } catch (error) {
-      console.error("There was an error submitting the form!", error);
+      console.error('Error submitting form:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
-      <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
-      <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" required />
-      <input type="text" name="group" value={formData.group} onChange={handleChange} placeholder="Group" />
-      <button type="submit">Submit</button>
-    </form>
+    <Container>
+      <form onSubmit={handleSubmit}>
+        <TextField name="name" label="Name" value={formData.name} onChange={handleChange} required />
+        <TextField name="email" label="Email" value={formData.email} onChange={handleChange} required />
+        <TextField name="phone" label="Phone" value={formData.phone} onChange={handleChange} required />
+        <TextField name="group" label="Group" value={formData.group} onChange={handleChange} required />
+        <Button type="submit" variant="contained" color="primary">Submit</Button>
+      </form>
+    </Container>
   );
 };
 
