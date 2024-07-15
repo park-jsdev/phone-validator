@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-        REGISTRY = "parkjsdev3232"
+        REGISTRY = 'parkjsdev3232'
         NUMVERIFY_API_KEY = credentials('numverify-api-key')
     }
 
@@ -16,9 +16,9 @@ pipeline {
         stage('Build and Push Docker Images') {
             steps {
                 script {
-                    docker.withRegistry('', env.DOCKER_HUB_CREDENTIALS) {
-                        def frontendImage = docker.build("${env.REGISTRY}/frontend:latest", "./frontend")
-                        def backendImage = docker.build("${env.REGISTRY}/backend:latest", "./backend")
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
+                        def frontendImage = docker.build("${REGISTRY}/frontend:latest", "./frontend")
+                        def backendImage = docker.build("${REGISTRY}/backend:latest", "./backend")
                         frontendImage.push()
                         backendImage.push()
                     }
@@ -29,9 +29,9 @@ pipeline {
             steps {
                 script {
                     sh 'docker-compose down'
-                    sh """
+                    sh '''
                     NUMVERIFY_API_KEY=$NUMVERIFY_API_KEY docker-compose up -d
-                    """
+                    '''
                 }
             }
         }
