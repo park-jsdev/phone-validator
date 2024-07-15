@@ -30,7 +30,7 @@ pipeline {
                 script {
                     sh 'docker-compose down'
                     sh """
-                    NUMVERIFY_API_KEY=${env.NUMVERIFY_API_KEY} docker-compose up -d
+                    NUMVERIFY_API_KEY=$NUMVERIFY_API_KEY docker-compose up -d
                     """
                 }
             }
