@@ -9,6 +9,10 @@ pipeline {
         REACT_APP_BACKEND_URL = 'http://3.17.56.99:5000/api/contacts'
     }
 
+    options {
+        timeout(time: 15, unit: 'MINUTES')
+    }
+
     stages {
         stage('Clone Repository') {
             steps {

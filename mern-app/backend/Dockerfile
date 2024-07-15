@@ -7,8 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm cache clean --force && npm install || npm install
+# Add echo statements for better logging
+RUN echo "Starting npm install..." \
+    && npm cache clean --force \
+    && npm install --verbose || npm install --verbose \
+    && echo "Npm install completed."
 
 # Copy the rest of the application code
 COPY . .
