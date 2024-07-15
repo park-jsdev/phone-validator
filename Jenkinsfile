@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/your_github_username/your_repo_name'
+                git branch: 'main', url: 'https://github.com/park-jsdev/phone-validator'
             }
         }
         stage('Build and Deploy with Docker Compose') {
