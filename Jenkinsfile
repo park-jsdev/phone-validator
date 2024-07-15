@@ -47,8 +47,10 @@ NUMVERIFY_API_KEY=${env.NUMVERIFY_API_KEY}"""
             steps {
                 script {
                     try {
-                        sh 'cd mern-app && docker-compose down'
-                        sh 'cd mern-app && docker-compose up -d --build'
+                        dir('mern-app') {
+                            sh 'docker-compose down'
+                            sh 'docker-compose up -d --build'
+                        }
                         echo 'Docker Compose executed successfully.'
                     } catch (Exception e) {
                         echo "Docker Compose execution failed: ${e}"
