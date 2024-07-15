@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = 'parkjsdev3232'
+        REGISTRY = "parkjsdev3232"
     }
 
     stages {
