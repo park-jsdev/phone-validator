@@ -15,46 +15,24 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/park-jsdev/phone-validator'
             }
         }
-        stage('Create .env Files') {
+        stage('Create .env File') {
             steps {
                 script {
-                    // Create backend .env file
-                    try {
-                        writeFile file: 'mern-app/backend/.env', text: """PORT=${env.BACKEND_PORT}
-MONGO_URI=${env.MONGO_URI}
-FRONTEND_URL=${env.FRONTEND_URL}
-NUMVERIFY_API_KEY=${env.NUMVERIFY_API_KEY}"""
-                        echo 'Backend .env file created successfully.'
-                    } catch (Exception e) {
-                        echo "Failed to create backend .env file: ${e}"
-                    }
-
-                    // Create frontend .env file
-                    try {
-                        writeFile file: 'mern-app/frontend/.env', text: """REACT_APP_BACKEND_URL=${env.REACT_APP_BACKEND_URL}"""
-                        echo 'Frontend .env file created successfully.'
-                    } catch (Exception e) {
-                        echo "Failed to create frontend .env file: ${e}"
-                    }
-
-                    // Debug: List files to ensure .env files are created
-                    sh 'ls -l mern-app/backend'
-                    sh 'ls -l mern-app/frontend'
+                    writeFile file: '.env', text: """
+                    PORT=${env.BACKEND_PORT}
+                    MONGO_URI=${env.MONGO_URI}
+                    FRONTEND_URL=${env.FRONTEND_URL}
+                    REACT_APP_BACKEND_URL=${env.REACT_APP_BACKEND_URL}
+                    NUMVERIFY_API_KEY=${env.NUMVERIFY_API_KEY}"""
+                    echo '.env file created successfully.'
                 }
             }
         }
         stage('Build and Deploy with Docker Compose') {
             steps {
                 script {
-                    try {
-                        dir('mern-app') {
-                            sh 'docker-compose down'
-                            sh 'docker-compose up -d --build'
-                        }
-                        echo 'Docker Compose executed successfully.'
-                    } catch (Exception e) {
-                        echo "Docker Compose execution failed: ${e}"
-                    }
+                    sh 'docker-compose down'
+                    sh 'docker-compose up -d --build'
                 }
             }
         }
