@@ -26,7 +26,7 @@ const FormPage = () => {
     e.preventDefault();
     try {
       // Frontend validation for duplicate phone number
-      const response = await axios.get('http://localhost:5000/api/contacts');
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}`);
       const existingContact = response.data.find(contact => contact.phone === formData.phone.trim());
       if (existingContact) {
         setErrorMessage('Phone number already exists.');
@@ -39,7 +39,7 @@ const FormPage = () => {
       // Set group to "Unknown" if it's empty
       const group = formData.group.trim() === '' ? 'Unknown' : formData.group.trim();
 
-      await axios.post('http://localhost:5000/api/contacts', {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}`, {
         ...formData,
         phone: formData.phone.trim(), // Trim the phone number
         group,
