@@ -11,6 +11,15 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/park-jsdev/phone-validator'
             }
         }
+
+        stage('Debug Folder Structure') {
+            steps {
+                script {
+                    // List the directory structure for debugging
+                    sh 'ls -R'
+                }
+            }
+        }
         stage('Build and Deploy with Docker Compose') {
             steps {
                 script {
