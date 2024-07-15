@@ -20,12 +20,16 @@ pipeline {
                 script {
                     // Create backend .env file
                     writeFile file: 'mern-app/backend/.env', text: """PORT=${env.BACKEND_PORT}
-                    MONGO_URI=${env.MONGO_URI}
-                    FRONTEND_URL=${env.FRONTEND_URL}
-                    NUMVERIFY_API_KEY=${env.NUMVERIFY_API_KEY}"""
+MONGO_URI=${env.MONGO_URI}
+FRONTEND_URL=${env.FRONTEND_URL}
+NUMVERIFY_API_KEY=${env.NUMVERIFY_API_KEY}"""
 
                     // Create frontend .env file
                     writeFile file: 'mern-app/frontend/.env', text: """REACT_APP_BACKEND_URL=${env.REACT_APP_BACKEND_URL}"""
+                    
+                    // Debug: List files to ensure .env files are created
+                    sh 'ls -l mern-app/backend'
+                    sh 'ls -l mern-app/frontend'
                 }
             }
         }
