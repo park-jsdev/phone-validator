@@ -5,12 +5,12 @@ pipeline {
         NUMVERIFY_API_KEY = credentials('numverify-api-key')
         BACKEND_PORT = '5000'
         MONGO_URI = 'mongodb://mongo:27017/formDB'
-        FRONTEND_URL = 'http://3.17.56.99:3000'
-        REACT_APP_BACKEND_URL = 'http://3.17.56.99:5000/api/contacts'
+        FRONTEND_URL = 'http://13.59.148.177:3000'
+        REACT_APP_BACKEND_URL = 'http://13.59.148.177:5000/api/contacts'
     }
 
     options {
-        timeout(time: 600, unit: 'MINUTES')
+        timeout(time: 2000, unit: 'MINUTES')
     }
 
     stages {
