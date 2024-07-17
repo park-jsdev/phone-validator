@@ -6,42 +6,44 @@ This is a MERN stack application that allows users to submit a form with their n
 
 ## API Endpoints
 
-- **POST /api/forms**: Takes in the form and stores it in the database. Returns the ID of the newly created form response.
-- **GET /api/forms**: Returns all responses to the form.
-- **GET /api/forms/:id**: Returns the form corresponding to the ID.
-- **DELETE /api/forms/:id**: Deletes the form corresponding to the ID.
+- **POST /api/contacts**: Takes in the form and stores it in the database. Returns the ID of the newly created form response.
+- **GET /api/contacts**: Returns all responses to the form.
+- **GET /api/contacts/:id**: Returns the form corresponding to the ID.
+- **DELETE /api/contacts/:id**: Deletes the form corresponding to the ID.
 
 ### Making REST API calls directly to server
 
-POST /api/forms:
+POST /api/contacts:
 
 Purpose: Create a new form entry.   
 Request Body: { "name": "John Doe", "email": "john@example.com", "phone": "1234567890" }   
 Response: The ID of the newly created form entry.   
 
 Example using curl:
-```curl
-curl -X POST -H "Content-Type: application/json" -d '{"name": "John Doe", "email": "john@example.com", "phone": "1234567890"}' http://localhost:5000/api/forms
+```sh
+curl -X POST -H "Content-Type: application/json" -d '{"name": "John Doe", "email": "john@example.com", "phone": "1234567890"}' http://13.59.148.177:5000/api/contacts
 ```
 
-GET /api/forms:
+GET /api/contacts:
 
-Purpose: Retrieve all form entries.   
-Response: An array of form entries.   
+Purpose: Retrieve all form entries.
+Response: An array of form entries.
 
 Example using curl:
+
 ```curl
-curl http://localhost:5000/api/forms
+curl http://13.59.148.177:5000/api/contacts
 ```
 
-GET /api/forms/:
+GET /api/contacts/:id:
 
-Purpose: Retrieve a form entry by its ID.   
-Response: The form entry corresponding to the specified ID.   
+Purpose: Retrieve a form entry by its ID.
+Response: The form entry corresponding to the specified ID.
 
 Example using curl:
+
 ```curl
-curl http://localhost:5000/api/forms/{id}
+curl http://13.59.148.177:5000/api/contacts/{id}
 ```
 
 ## Running the Application
@@ -49,35 +51,28 @@ curl http://localhost:5000/api/forms/{id}
 ### Prerequisites
 
 - Docker and Docker Compose installed.
+- Jenkins installed and configured with access to your GitHub repository.
+- The address is currently an AWS EC2 public IP address, so it can change. If you are working in your own fork, change the address appropriately.
 
 ### Instructions
 
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/park-jsdev/library.git
-cd webdev/mern/mern-app
+git clone https://github.com/park-jsdev/phone-validator.git
+cd phone-validator
 ```
 
-2. Add your NumVerify API key to backend/.env:
+2. Configure Jenkins to pull from your GitHub repository and set up the pipeline. Use the included Jenkinsfile.
 
-backend/.env:
-```plaintext
-PORT=5000
-MONGO_URI=mongodb://mongo:27017/formDB
-NUMVERIFY_API_KEY=your_numverify_api_key
-```
+3. Set up Jenkins credentials and add the NumVerify API key with the ID of 'numverify-api-key'.
 
-3. Build and start the Docker containers:
+4. Build and deploy the application using the Jenkins pipeline by manually triggering a build or pushing to the repository. You can create fork of this repository and change the GitHub repo that triggers the build. Set up a GitHub webhook in the repository.
 
-```sh
-docker-compose up --build
-```
+5. Access the application:
 
-4. Access the application:
-
-Frontend: http://localhost:3000   
-Backend: http://localhost:5000/api/forms   
+Frontend: http://13.59.148.177:3000
+Backend: http://13.59.148.177:5000/api/contacts
 
 ### Technologies Used
 
@@ -86,4 +81,5 @@ Backend: http://localhost:5000/api/forms
 - React.js
 - Node.js
 - Docker
+- Jenkins
 - NumVerify API
