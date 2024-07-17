@@ -2,7 +2,15 @@
 
 ## Overview
 
-This is a MERN stack application that allows users to submit a form with their name, email, and phone number. The phone number is validated using the NumVerify API.
+This is a MERN stack application that allows users to submit a form with their name, email, phone number, and social media details. The phone number is validated using the NumVerify API. 
+
+The application includes new features such as:
+- A backend API to manage contacts.
+- Frontend user dashboard.
+- The ability to create custom security groups.
+- Persistent storage on Mongo database.
+- Assigning security ratings to each contact based on the group they belong to.
+- The integration with Jenkins for CI/CD pipelines.
 
 ## API Endpoints
 
